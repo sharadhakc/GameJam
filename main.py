@@ -2,6 +2,7 @@ import pygame
 import sys
 
 from enemy import Enemy
+from make_enemy import make_enemy
 
 pygame.init() #start up pygame
 
@@ -15,23 +16,29 @@ pygame.display.set_caption("SHOOTER")
 running=True
 
 
+
+
+
+
+
 enemy1 = pygame.image.load("Assets/alien1.png")
 
 enemy_size=[100,100]
 
-enemy1 = pygame.transform.scale(enemy1,(enemy_size[0],enemy_size[1]))
+e1_sprite = pygame.transform.scale(enemy1,(enemy_size[0],enemy_size[1]))
 
 enemyPos= [100,100]
 
 movement=[False, False]
 speed=0.2
 
-e1= Enemy(health=2, damage=2, position= enemyPos, speed=speed, sprite=enemy1, level=1)
+
+enemy1_array = make_enemy(start=enemyPos, num_enemy=19, level=1, sprite=e1_sprite, size=enemy_size)
+print(len(enemy1_array))
 
 
 while running:
 
-    enemyPos[1]= enemyPos[1]+ speed
 
     for event in pygame.event.get():
         if event.type== pygame.QUIT: # if they click on X it exits the screen
@@ -40,7 +47,11 @@ while running:
     screen.fill((0,0,0))
 
 
-    screen.blit(enemy1,(enemyPos[0],enemyPos[1]))
+
+    
+    for e in enemy1_array:
+        screen.blit(e.sprite,(e.position[0],e.position[1]))
+        e.change_position()
+
 
     pygame.display.flip()
-
