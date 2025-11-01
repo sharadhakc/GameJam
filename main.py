@@ -17,7 +17,7 @@ pygame.display.set_caption("SHOOTER")
 running=True
 
 # Enemy Section ------------------------------------------------------------------------------
-e1_sprite = pygame.image.load("Assets/alien1.png")
+e1_sprite = pygame.image.load("Assets/alien2.png")
 enemy_size=[100,100]
 enemy_pos= [100,100]
 speed=0.2
