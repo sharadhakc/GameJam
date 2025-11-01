@@ -28,7 +28,7 @@ running = True
 # player is an image
 # To load an image need to add directory or location of 
 # image inside of .load( [Directory/location of image] )
-player = pygame.image.load("characters/player.png")
+player = pygame.image.load("Assets/player.png")
 
 
 # Making player sprite smaller

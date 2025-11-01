@@ -27,7 +27,7 @@ running = True
 # player is an image
 # To load an image need to add directory or location of 
 # image inside of .load( [Directory/location of image] )
-player = pygame.image.load("characters/player.png")
+player = pygame.image.load("Assets/player.png")
 
 
 # Making player sprite smaller
@@ -43,7 +43,7 @@ player = pygame.transform.scale(player, (playerSize[0], playerSize[1]))
 # Higher X - coordinate means further right on the screen
 # playerPos[0] represents x - axis movement
 # while playerPos[1] represents y - axis movement
-playerPos = [50, 100]
+playerPos = [350, 500]
 
 # New 
 ############################################################################################################################################################
@@ -53,7 +53,7 @@ playerPos = [50, 100]
 # movement[0] - Left movement
 # movement[1] - Right movement
 movement = [False, False]
-speed = 0.5
+speed = 0.3
 
 #
 #
