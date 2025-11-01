@@ -2,7 +2,7 @@ import pygame
 import sys
 
 from enemy import Enemy
-from make_enemy import enemy_enemy
+from make import enemy_enemy
 
 pygame.init() #start up pygame
 

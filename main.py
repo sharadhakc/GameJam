@@ -2,7 +2,7 @@ import pygame
 import sys
 
 from enemy import Enemy
-from make_enemy import make_enemy
+from make import make_enemy, make_bullets
 from player import Player
 
 pygame.init() #start up pygame
@@ -31,7 +31,14 @@ player_pos = [550, 600]
 speed= 0.5
 player= Player(health=5, bul_sp= speed, bul_count=50, defence= 3, position= player_pos, size= player_size, sprite= player_sprite )
 dx = 0
+#player section------------------------------------------------------------------------------
 
+
+# blast section------------------------------------------------------------------------------
+
+blast_sprite = pygame.image.load("Assets/blast.png")
+blast_array = make_bullets(player.bul_count, sprite=blast_sprite, player_pos=player.position, speed=player.bul_sp, player_size=player_size, bullet_size=[15,15])
+# blast section------------------------------------------------------------------------------
 
 
 
@@ -63,8 +70,14 @@ while running:
     for e in enemy1_array:
         screen.blit(e.sprite,(e.position[0],e.position[1]))
         e.change_position()
+    
+    for b in blast_array:
 
+        screen.blit(b.sprite,(b.position[0],b.position[1]))
+        b.move()
+    
     screen.blit(player.sprite,(player.position[0],player.position[1]))
+
 
 
     pygame.display.flip()
