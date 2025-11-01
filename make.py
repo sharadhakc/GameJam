@@ -12,18 +12,18 @@ def make_enemy(start, num_enemy, level, sprite,size):
 
     return enemy
 
-def make_bullets(num_blast, sprite, player_size, player_pos,bullet_size, speed ):
+def make_bullets(blast_array, num_blast, sprite, player_size, player_pos,bullet_size, speed ):
     
-    blasts = []
 
     for b in range(num_blast):
 
-        x_position = player_pos[0] + (b*10)
+        x_position = player_pos[0] + (b*10) + player_size[0]/2
 
-        if x_position > player_pos[0] and x_position + bullet_size[0]  < player_pos[0] + player_size[0]:
-            blasts.append(Blast(damage=2, position=[x_position, player_pos[1] + 10], speed=speed, sprite=sprite))
+        if x_position >= player_pos[0] and x_position + bullet_size[0]  < player_pos[0] + player_size[0]:
 
-    return blasts
+            blast_array.append(Blast(damage=2, position=[x_position, player_pos[1] + 10], speed=speed, sprite=sprite))
+
+    return blast_array
 
 
 

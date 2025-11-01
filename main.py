@@ -1,11 +1,14 @@
 import pygame
 import sys
+import time
 
 from enemy import Enemy
 from make import make_enemy, make_bullets
 from player import Player
 
 pygame.init() #start up pygame
+
+
 
 screenWidth=1200
 screenHeight=800
@@ -29,21 +32,24 @@ player_sprite= pygame.image.load("Assets/player.png")
 player_size= [100,100]
 player_pos = [550, 600]
 speed= 0.5
-player= Player(health=5, bul_sp= speed, bul_count=50, defence= 3, position= player_pos, size= player_size, sprite= player_sprite )
+player= Player(health=5, bul_sp= speed, bul_count=1, defence= 3, position= player_pos, size= player_size, sprite= player_sprite )
 dx = 0
 #player section------------------------------------------------------------------------------
 
 
 # blast section------------------------------------------------------------------------------
-
+blast_array = []
 blast_sprite = pygame.image.load("Assets/blast.png")
-blast_array = make_bullets(player.bul_count, sprite=blast_sprite, player_pos=player.position, speed=player.bul_sp, player_size=player_size, bullet_size=[15,15])
+print(len(blast_array))
 # blast section------------------------------------------------------------------------------
 
 
 
 while running:
 
+
+
+    blast_array = make_bullets(blast_array= blast_array,num_blast=player.bul_count, sprite=blast_sprite, player_pos=player.position, speed=player.bul_sp, player_size=player_size, bullet_size=[15,15])
 
     player.move_position(dx)
     for event in pygame.event.get():
