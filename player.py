@@ -1,11 +1,18 @@
+import pygame
 class Player:
 
-    def __init__(self, health, bul_sp, bul_count, defence, position ):
+    def __init__(self, health, bul_sp, bul_count, defence, position,size, sprite ):
         self.health=health
         self.bul_sp= bul_sp
         self.bul_count=bul_count
+        
         self.defence= defence
         self.position= position # this is an array with index 0 as x and index 1 as y
+
+        self.size= size
+
+        self.sprite=pygame.transform.scale(sprite,(self.size[0],self.size[1]))
+
     
     def take_dmg (self, income_dmg): # function to see how much our health decreases
         damage= income_dmg - self.defence
