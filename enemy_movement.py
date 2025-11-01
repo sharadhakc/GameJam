@@ -1,7 +1,7 @@
 import pygame
 import sys
 
-from enemy import Enemy
+import pygame
 
 pygame.init() #start up pygame
 
@@ -25,9 +25,6 @@ enemyPos= [100,100]
 
 movement=[False, False]
 speed=0.2
-
-e1= Enemy(health=2, damage=2, position= enemyPos, speed=speed, sprite=enemy1, level=1)
-
 
 while running:
 
