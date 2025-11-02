@@ -16,7 +16,12 @@ class Enemy:
         self.health-= incoming_damage 
 
     def change_position(self):
-        self.position[1]+= (self.speed * self.level)
+        level = self.level
+        if self.level == 3:
+            level = 1.5
+        elif self.level > 1:
+            level = self.level * 0.65
+        self.position[1]+= (self.speed * level)
 
     
 

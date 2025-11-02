@@ -1,7 +1,8 @@
 import pygame
 class Player:
 
-    def __init__(self, health, bul_sp, bul_count, defence, position,size, sprite ):
+    def __init__(self, health, bul_sp, bul_count, defence, position,size, sprite):
+        self.max_health = health
         self.health=health
         self.bul_sp= bul_sp
         self.bul_count=bul_count
@@ -12,6 +13,7 @@ class Player:
         self.size= size
 
         self.sprite=pygame.transform.scale(sprite,(self.size[0],self.size[1]))
+
 
     
     def take_dmg (self, income_dmg): # function to see how much our health decreases
