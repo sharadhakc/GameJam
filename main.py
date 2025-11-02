@@ -2,7 +2,7 @@ import pygame
 import random
 import sys
 import time
-from screen import screenHeight, screenWidth, background, title_screen, end_screen
+from screen import screenHeight, screenWidth, background, title_screen, text_color, font
 
 from enemy import Enemy
 from make import make_enemy, make_bullets
@@ -23,21 +23,25 @@ FPS = 480
 
 running=True
 
-
+current_score = 0
+highest_score = 0
+score_text = font.render(f"Score: {current_score}", True, text_color)
 
 state = {
     "title": True,
     "game": False,
-    "end": False
 }
 
 
-# Enemy Section ------------------------------------------------------------------------------
 sprite = {
     1: pygame.image.load("Assets/alien1.png"),
     2: pygame.image.load("Assets/alien2.png"),
     3: pygame.image.load("Assets/alien3.png")
 }
+blast_sprite = pygame.image.load("Assets/blast.png")
+
+# Enemy Section ------------------------------------------------------------------------------
+
 enemy_size=[50,50]
 enemy_pos= [100,100]
 speed=0.2
@@ -58,7 +62,6 @@ dx = 0
 
 # blast section------------------------------------------------------------------------------
 blast_array = []
-blast_sprite = pygame.image.load("Assets/blast.png")
 print(len(blast_array))
 cooldown = 200
 counter = 0
@@ -74,6 +77,7 @@ def check_blast_enemy_collision(blast_array, enemy_array):
     """Check if any blast hits any enemy and handle damage"""
     blasts_to_remove = []
     enemies_to_remove = []
+    score = 0
     
     for blast in blast_array:
         blast_rect = pygame.Rect(blast.position[0], blast.position[1], 
@@ -93,12 +97,15 @@ def check_blast_enemy_collision(blast_array, enemy_array):
                 if enemy.health <= 0:
                     if enemy not in enemies_to_remove:
                         enemies_to_remove.append(enemy)
+                        score += 10
     
     # Remove dead entities
     for blast in blasts_to_remove:
         blast_array.remove(blast)
     for enemy in enemies_to_remove:
         enemy_array.remove(enemy)
+    
+    return score
 
 
 
@@ -126,7 +133,7 @@ def check_enemy_player_collision(enemy_array, player):
 
 def spawn_random_enemy(size, pos):
 
-    start = random.randint(0, 1200)
+    start = random.randint(200, 1000)
     num_enemy = random.randint(1, 4)
     level = random.randint(1,3)
 
@@ -140,10 +147,13 @@ def render_screen(screen, screen_elements):
             screen.blit(value, (0, 0))
 
         elif key == "text":
-            screen.blit(value, (screenWidth//2, 100))
+            screen.blit(value, (screenWidth//2 - 60, 100))
 
-        else:
-            screen.blit(value, (screenWidth//2, screenHeight//2))
+        elif key == "score":            
+            screen.blit(value, (screenWidth - 400, 10))  # Top right
+            
+        elif key == "start":
+            screen.blit(value, (screenWidth//2 - 100, screenHeight//2))
 
 def render_health(player, screen):
     bar_width = 300
@@ -157,6 +167,7 @@ def render_health(player, screen):
 
 
 
+
 while running:
 
     # Makes speed of the game consistent 
@@ -166,11 +177,7 @@ while running:
     if state["title"]:
         render_screen(screen=screen, screen_elements=title_screen)
 
-    elif state["end"]:
-        render_screen(screen=screen, screen_elements=end_screen)
-
-
-    
+ 
 
 
     player.move_position(dx)
@@ -179,6 +186,18 @@ while running:
     for event in pygame.event.get():
         if event.type== pygame.QUIT: # if they click on X it exits the screen
             running=False
+
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if title_screen["button_rect"].collidepoint(event.pos):
+                state["title"] = False
+                state["game"] = True
+
+
+
+    
+
+
 
 
         keys = pygame.key.get_pressed()
@@ -209,7 +228,11 @@ while running:
 
 
 
-        check_blast_enemy_collision(blast_array, enemy_array)
+        score = check_blast_enemy_collision(blast_array, enemy_array)
+        current_score += score
+        score_text = font.render(f"Score: {current_score}", True, text_color)
+
+        screen.blit(score_text, (screenWidth - 250, 10))  # Top right
         is_alive = check_enemy_player_collision(enemy_array, player)
 
 
@@ -223,7 +246,16 @@ while running:
 
         if not is_alive:
             print("Game Over")
-            running = False
+            state["game"] = False
+            state["title"] = True
+
+            highest_score = max(highest_score, current_score)
+            current_score = 0
+            title_screen["score"] = font.render(f"Highest score: {highest_score}", True, text_color),
+
+            player.health = player.max_health
+            enemy_array = []
+            blast_array = []
 
 
         if counter == 0:
