@@ -20,10 +20,10 @@ class Player:
         damage= income_dmg - self.defence
         if damage<= 0: # checking if the damage is -ve 
             damage=0
-        print("Health=", self.health)
+        # print("Health=", self.health)
         self.health-= damage
-        print("New health=", self.health)
-        print("Damage taken=", damage)
+        # print("New health=", self.health)
+        # print("Damage taken=", damage)
 
     def heal(self, heal_amount ):
         self.health+= heal_amount

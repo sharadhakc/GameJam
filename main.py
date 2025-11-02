@@ -1,4 +1,5 @@
 import pygame
+from upgrade import Upgrade
 import random
 import sys
 import time
@@ -9,9 +10,6 @@ from make import make_enemy, make_bullets
 from player import Player
 
 pygame.init() #start up pygame
-
-
-
 
 
 screen = pygame.display.set_mode((screenWidth,screenHeight))
@@ -36,8 +34,10 @@ state = {
 sprite = {
     1: pygame.image.load("Assets/alien1.png"),
     2: pygame.image.load("Assets/alien2.png"),
-    3: pygame.image.load("Assets/alien3.png")
+    3: pygame.image.load("Assets/alien3.png"),
+    "upgrade": pygame.image.load("Assets/upgrade.png")
 }
+
 blast_sprite = pygame.image.load("Assets/blast.png")
 
 # Enemy Section ------------------------------------------------------------------------------
@@ -62,7 +62,6 @@ dx = 0
 
 # blast section------------------------------------------------------------------------------
 blast_array = []
-print(len(blast_array))
 cooldown = 200
 counter = 0
 # blast section------------------------------------------------------------------------------
