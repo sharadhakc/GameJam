@@ -18,7 +18,8 @@ class Enemy:
     def change_position(self):
         level = self.level
         if self.level == 3:
-            level = 1.5
+            level = 0.8
+            
         elif self.level > 1:
             level = self.level * 0.65
         self.position[1]+= (self.speed * level)

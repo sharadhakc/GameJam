@@ -55,7 +55,7 @@ player_sprite= pygame.image.load("Assets/player.png")
 player_size= [100,100]
 player_pos = [550, 600]
 speed= 0.5
-player= Player(health=5, bul_sp= speed, bul_count=1, defence= 3, position= player_pos, size= player_size, sprite= player_sprite)
+player= Player(health=15, bul_sp= speed, bul_count=1, defence= 1, position= player_pos, size= player_size, sprite= player_sprite)
 dx = 0
 #player section------------------------------------------------------------------------------
 
@@ -70,6 +70,21 @@ counter = 0
 
 
 
+def enemy_passed(enemy_array, player):
+
+    enemy_to_remove = []
+    for e in enemy_array:
+
+        if (e.position[1] + e.size[1]) >= screenHeight:
+
+            if e not in enemy_to_remove:
+                enemy_to_remove.append(e)
+    
+                player.take_dmg(e.damage)
+
+    
+    for e in enemy_to_remove:
+        enemy_array.remove(e)
 
 
 
@@ -134,7 +149,7 @@ def check_enemy_player_collision(enemy_array, player):
 def spawn_random_enemy(size, pos):
 
     start = random.randint(200, 1000)
-    num_enemy = random.randint(1, 4)
+    num_enemy = random.randint(1, 3)
     level = random.randint(1,3)
 
     make_enemy(enemy_array=enemy_array, start=[start,pos[1]], num_enemy=num_enemy, level=level, sprite=sprite[level], size=size)
@@ -151,7 +166,7 @@ def render_screen(screen, screen_elements):
 
         elif key == "score":            
             screen.blit(value, (screenWidth - 400, 10))  # Top right
-            
+
         elif key == "start":
             screen.blit(value, (screenWidth//2 - 100, screenHeight//2))
 
@@ -235,6 +250,8 @@ while running:
         screen.blit(score_text, (screenWidth - 250, 10))  # Top right
         is_alive = check_enemy_player_collision(enemy_array, player)
 
+        enemy_passed(enemy_array=enemy_array, player=player)
+
 
         if enemy_counter == 0:
             enemy_counter = enemy_cooldown
@@ -251,7 +268,7 @@ while running:
 
             highest_score = max(highest_score, current_score)
             current_score = 0
-            title_screen["score"] = font.render(f"Highest score: {highest_score}", True, text_color),
+            title_screen["score"] = font.render(f"Highest score: {highest_score}", True, text_color)
 
             player.health = player.max_health
             enemy_array = []
@@ -260,7 +277,7 @@ while running:
 
         if counter == 0:
             counter = cooldown
-            blast_array = make_bullets(blast_array= blast_array,num_blast=player.bul_count, sprite=blast_sprite, player_pos=player.position, speed=player.bul_sp, player_size=player_size, bullet_size=[15,15])
+            blast_array = make_bullets(blast_array= blast_array,num_blast=player.bul_count, sprite=blast_sprite, player_pos=player.position, speed=player.bul_sp, player_size=player_size, bullet_size=[30,30])
         else:
             counter -= 1
 
