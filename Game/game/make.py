@@ -8,6 +8,9 @@ def make_enemy(enemy_array, start, num_enemy, level, sprite,size):
 
         x_position = start[0] + (e*150)
         if x_position > 0 and x_position+ size[0] < 1200:
+
+            if level == 1:
+                level = 1.5
             enemy_array.append(Enemy(health=2*level*0.5, damage=level, position=[x_position, start[1]], speed=(0.2 * level), level=level, sprite=sprite, size=size))
 
     return enemy_array

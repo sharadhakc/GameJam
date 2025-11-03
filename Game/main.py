@@ -53,7 +53,7 @@ enemy_counter = 0
 player_sprite= pygame.image.load("Assets/player.png")
 player_size= [100,100]
 player_pos = [550, 680]
-speed= 0.5 * 3
+speed= 0.5 * 4
 player= Player(health=15, bul_sp=speed, bul_count=1, defence= 0.5, position= player_pos, size= player_size, sprite= player_sprite)
 dx = 0
 #player section------------------------------------------------------------------------------
@@ -61,7 +61,7 @@ dx = 0
 
 # blast section------------------------------------------------------------------------------
 blast_array = []
-cooldown = 100
+cooldown = 50
 counter = 0
 # blast section------------------------------------------------------------------------------
 
@@ -211,6 +211,8 @@ async def main(running,
     highest_score, dx, sprite):
     while running:
 
+        print(state)
+
         # Makes speed of the game consistent 
         clock.tick(FPS)
 
@@ -240,9 +242,9 @@ async def main(running,
             dx = 0  # Reset movement each frame
             
             if keys[pygame.K_a] or keys[pygame.K_LEFT]:
-                dx = -1.5 * 2.5
+                dx = -1.5 * 3
             if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
-                dx = 1.5 * 2.5
+                dx = 1.5 * 3
         
             # if event.type== pygame.KEYDOWN:
             #     if event.key == pygame.K_a or event.key == pygame.K_LEFT :
@@ -292,13 +294,13 @@ async def main(running,
                 title_screen["score"] = font.render(f"Highest score: {highest_score}", True, text_color)
 
                 player.health = player.max_health
-                enemy_array = []
-                blast_array = []
+                enemy_array.clear()
+                blast_array.clear()
 
 
             if counter == 0:
                 counter = cooldown
-                blast_array = make_bullets(blast_array= blast_array,num_blast=player.bul_count, sprite=blast_sprite, player_pos=player.position, speed=player.bul_sp, player_size=player_size, bullet_size=[40,40])
+                blast_array = make_bullets(blast_array= blast_array,num_blast=player.bul_count, sprite=blast_sprite, player_pos=player.position, speed=player.bul_sp, player_size=player_size, bullet_size=[30,40])
             else:
                 counter -= 1
 
