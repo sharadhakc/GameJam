@@ -41,11 +41,11 @@ blast_sprite = pygame.image.load("Assets/blast.png")
 
 # Enemy Section ------------------------------------------------------------------------------
 
-enemy_size=[50,50]
+enemy_size=[75,75]
 enemy_pos= [100,100]
 speed=0.2
 enemy_array = []
-enemy_cooldown = 500
+enemy_cooldown = 150
 enemy_counter = 0
 # Enemy Section ------------------------------------------------------------------------------
 
@@ -147,8 +147,14 @@ def check_enemy_player_collision(enemy_array, player):
 def spawn_random_enemy(size, pos):
 
     start = random.randint(200, 1000) # x - position
-    num_enemy = random.randint(1, 4)
     level = random.randint(1,3)
+    num_enemy = 0
+
+    if level > 2:
+        num_enemy = random.randint(1, 2)
+    else:
+        num_enemy = random.randint(1, 3)
+
 
     make_enemy(enemy_array=enemy_array, start=[start,pos[1]], num_enemy=num_enemy, level=level, sprite=sprite[level], size=size)
 
@@ -160,7 +166,7 @@ def render_screen(screen, screen_elements):
             screen.blit(value, (0, 0))
 
         elif key == "text":
-            screen.blit(value, (screenWidth//2 - 60, 100))
+            screen.blit(value, (screenWidth//2 - 100, 100))
 
         elif key == "score":            
             screen.blit(value, (screenWidth - 400, 10))  # Top right
@@ -234,9 +240,9 @@ async def main(running,
             dx = 0  # Reset movement each frame
             
             if keys[pygame.K_a] or keys[pygame.K_LEFT]:
-                dx = -1.5 * 2
+                dx = -1.5 * 2.5
             if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
-                dx = 1.5 * 2
+                dx = 1.5 * 2.5
         
             # if event.type== pygame.KEYDOWN:
             #     if event.key == pygame.K_a or event.key == pygame.K_LEFT :
@@ -270,7 +276,7 @@ async def main(running,
 
             if enemy_counter == 0:
                 enemy_counter = enemy_cooldown
-                enemy_cooldown = random.randint(200, 500)
+                enemy_cooldown = random.randint(200, 300)
                 spawn_random_enemy(size=enemy_size, pos=enemy_pos)
             
             else:
@@ -292,7 +298,7 @@ async def main(running,
 
             if counter == 0:
                 counter = cooldown
-                blast_array = make_bullets(blast_array= blast_array,num_blast=player.bul_count, sprite=blast_sprite, player_pos=player.position, speed=player.bul_sp, player_size=player_size, bullet_size=[25,25])
+                blast_array = make_bullets(blast_array= blast_array,num_blast=player.bul_count, sprite=blast_sprite, player_pos=player.position, speed=player.bul_sp, player_size=player_size, bullet_size=[40,40])
             else:
                 counter -= 1
 

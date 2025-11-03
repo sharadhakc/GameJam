@@ -18,7 +18,7 @@ button_rect = pygame.Rect(screenWidth//2 - 100, screenHeight//2, 200, 75)
 
 title_screen = {
     "background": background,
-    "text": font.render("Shooter", True, text_color),
+    "text": font.render("Alien Blaster", True, text_color),
     "start": button,
     "button_rect": button_rect,
     "score": font.render("Highest score:", True, text_color),
