@@ -22,7 +22,7 @@ class Enemy:
             
         elif self.level > 1:
             level = self.level * 0.65
-        self.position[1]+= (self.speed * level * 4)
+        self.position[1]+= (self.speed * level * 3)
 
     
 
